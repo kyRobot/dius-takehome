@@ -28,7 +28,7 @@ public class BundleDeal implements Deal {
         // one free item per purchased item
         if (free <= purchased) {
           return freeProduct.price().multiply(BigDecimal.valueOf(free));
-        } else if (purchased < free) {
+        } else {
           return freeProduct.price().multiply(BigDecimal.valueOf(purchased));
         }
       }

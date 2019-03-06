@@ -10,8 +10,8 @@ import org.junit.Test;
 
 public class BulkBuyDealTest {
 
-  private Product product = Product.create("p", "5");
-  private Deal bulkBuy3 = new BulkBuyDeal(product, 3, BigDecimal.ONE);
+  private final Product product = Product.create("p", "5");
+  private final Deal bulkBuy3 = new BulkBuyDeal(product, 3, BigDecimal.ONE);
 
   @Test
   public void noMinimumPurchaseNoDeal() {

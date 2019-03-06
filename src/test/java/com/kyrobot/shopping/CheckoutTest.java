@@ -65,7 +65,6 @@ public class CheckoutTest {
 
   @Test
   public void scanOrderIsIrrelevant() {
-    var expected = ipad.price().add(macbook.price());
     checkout.scan(ipad.sku());
     checkout.scan(macbook.sku());
     var ipadFirst = checkout.total();

@@ -9,8 +9,8 @@ import org.junit.Test;
 
 public class MultiBuyDealTest {
 
-  private Product product = Product.create("p", "5");
-  private Deal multiBuy3for2 = new MultiBuyDeal(product, 3, product.price());
+  private final Product product = Product.create("p", "5");
+  private final Deal multiBuy3for2 = new MultiBuyDeal(product, 3, product.price());
 
   @Test
   public void noMinimumPurchaseNoDeal() {

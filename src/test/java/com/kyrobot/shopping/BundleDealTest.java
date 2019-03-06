@@ -10,9 +10,9 @@ import org.junit.Test;
 
 public class BundleDealTest {
 
-  private Product paidProduct = Product.create("paid", "5");
-  private Product freeProduct = Product.create("free", "1");
-  private Deal bundleDeal = new BundleDeal(paidProduct, freeProduct);
+  private final Product paidProduct = Product.create("paid", "5");
+  private final Product freeProduct = Product.create("free", "1");
+  private final Deal bundleDeal = new BundleDeal(paidProduct, freeProduct);
 
   @Test
   public void noProductsPurchaseNoDeal() {

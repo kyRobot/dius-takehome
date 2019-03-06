@@ -8,7 +8,7 @@ import java.util.function.Function;
  * A Deal is a function that takes a Product List and calculates a Discount value Discount should be
  * Zero or more, never negative;
  */
-public interface Deal extends Function<List<Product>, BigDecimal> {
+interface Deal extends Function<List<Product>, BigDecimal> {
 
   default BigDecimal applyTo(List<Product> products) {
     return BigDecimal.ZERO;
