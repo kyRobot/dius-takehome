@@ -14,7 +14,7 @@ public class Checkout {
   private final Map<String, Product> products;
   private final Set<Deal> deals;
   private final List<Product> basket;
-  private BinaryOperator<BigDecimal> accumulator = (itemPrice, total) -> total.add(itemPrice);
+  private final BinaryOperator<BigDecimal> accumulator = (itemPrice, total) -> total.add(itemPrice);
 
   public Checkout(Set<Product> products, Set<Deal> deals) {
     this.products = products.stream().collect(Collectors.toUnmodifiableMap(Product::sku, p -> p));

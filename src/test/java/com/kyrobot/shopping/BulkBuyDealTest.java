@@ -21,6 +21,13 @@ public class BulkBuyDealTest {
   }
 
   @Test
+  public void noPurchaseNoDeal() {
+    var expected = BigDecimal.ZERO;
+    var discount = bulkBuy3.apply(List.of());
+    assertThat("Discount given without minimum purchase", discount, equalTo(expected));
+  }
+
+  @Test
   public void minimumPurchaseGivesDeal() {
     var expected = new BigDecimal("3");
     var discount = bulkBuy3.apply(List.of(product, product, product));
