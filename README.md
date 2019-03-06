@@ -1,7 +1,7 @@
 # dius-takehome
 A takehome challenge from Dius
 
-It is a Java 11 App with no cli or GUI so an example is provided for expected usage. There are also tests which serve the dual purpose of example API use & verification.
+It is a Java 11 App with no cli or GUI so an example is provided for expected usage. There are also tests which serve the dual purpose of example API use & verification. The tests cover the basics, i.e pricing isnt changed between total requests, scan order doesnt matter, deals actually work, the discount value is as expected etc... but as ever, there can always be more tests.
 
 This is a simple checkout for a shop selling computer goods.
 It has the concept of Products which are a tuple of SKU and Price.
