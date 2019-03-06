@@ -40,4 +40,6 @@ public class BulkBuyDealTest {
     var discount = bulkBuy3.apply(Collections.nCopies(4, product));
     assertThat("no Discount per item with minimum purchase", discount, equalTo(expected));
   }
+
+
 }

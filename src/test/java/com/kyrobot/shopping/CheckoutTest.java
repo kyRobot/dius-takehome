@@ -16,7 +16,7 @@ public class CheckoutTest {
   private final Product cable = Product.create("vga", "30.00");
 
   private final Deal appletvMulti = new MultiBuyDeal(appletv, 3, appletv.price());
-  private final Deal ipadBulkBuy = new BulkBuyDeal(ipad, 4, BigDecimal.valueOf(100));
+  private final Deal ipadBulkBuy = new BulkBuyDeal(ipad, 4, BigDecimal.valueOf(50));
   private final Deal cableBundle = new BundleDeal(macbook, cable);
   private Checkout checkout;
 
@@ -93,5 +93,47 @@ public class CheckoutTest {
     var expected = appletv.price().add(ipad.price()).add(macbook.price()).add(appletv.price());
     var total = checkout.total();
     assertThat("Deals not applied", total, equalTo(expected));
+  }
+
+
+  @Test
+  public void exapleScenario1() {
+//    SKUs Scanned: atv, atv, atv, vga Total expected: $249.00
+
+    var expected = new BigDecimal("249.00");
+    checkout.scan(appletv.sku());
+    checkout.scan(appletv.sku());
+    checkout.scan(appletv.sku());
+    checkout.scan(cable.sku());
+    assertThat("Example from takehome 1", checkout.total(), equalTo(expected));
+
+  }
+
+  @Test
+  public void exapleScenario2() {
+//    SKUs Scanned: atv, ipd, ipd, atv, ipd, ipd, ipd Total expected: $2718.95
+
+    var expected = new BigDecimal("2718.95");
+    checkout.scan(appletv.sku());
+    checkout.scan(ipad.sku());
+    checkout.scan(ipad.sku());
+    checkout.scan(appletv.sku());
+    checkout.scan(ipad.sku());
+    checkout.scan(ipad.sku());
+    checkout.scan(ipad.sku());
+    assertThat("Example from takehome 2", checkout.total(), equalTo(expected));
+
+  }
+
+  @Test
+  public void exapleScenario3() {
+//    SKUs Scanned: mbp, vga, ipd Total expected: $1949.98
+
+    var expected = new BigDecimal("1949.98");
+    checkout.scan(macbook.sku());
+    checkout.scan(cable.sku());
+    checkout.scan(ipad.sku());
+    assertThat("Example from takehome 3", checkout.total(), equalTo(expected));
+
   }
 }
