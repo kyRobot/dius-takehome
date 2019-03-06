@@ -4,17 +4,21 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CheckoutTest {
 
-  private Checkout checkout;
-
   private final Product ipad = Product.create("ipd", "549.99");
   private final Product macbook = Product.create("mbp", "1399.99");
   private final Product appletv = Product.create("atv", "109.50");
   private final Product cable = Product.create("vga", "30.00");
+
+  private final Deal appletvMulti = new MultiBuyDeal(appletv, 3, appletv.price());
+  private final Deal ipadBulkBuy = new BulkBuyDeal(ipad, 4, BigDecimal.valueOf(100));
+  private final Deal cableBundle = new BundleDeal(macbook, cable);
+  private Checkout checkout;
 
   @Before
   public void setUp() {
@@ -22,13 +26,15 @@ public class CheckoutTest {
   }
 
   private Checkout baseCheckout() {
-    return new Checkout(ipad, macbook, appletv, cable);
+    return new Checkout(
+        Set.of(ipad, macbook, appletv, cable), Set.of(appletvMulti, ipadBulkBuy, cableBundle));
   }
 
   @Test
   public void noItemTotalIsZero() {
     var total = checkout.total();
-    assertThat("No items scanned should be 0 total", total, equalTo(BigDecimal.ZERO));
+    var expected = BigDecimal.ZERO.add(BigDecimal.ZERO);
+    assertThat("No items scanned should be 0 total", total.compareTo(expected), equalTo(0));
   }
 
   @Test
@@ -77,5 +83,15 @@ public class CheckoutTest {
     assertThat("Scan order changed total", ipadFirst, equalTo(macbookFirst));
   }
 
-
+  @Test
+  public void discountsApply() {
+    checkout.scan(appletv.sku());
+    checkout.scan(ipad.sku());
+    checkout.scan(macbook.sku());
+    checkout.scan(appletv.sku());
+    checkout.scan(appletv.sku());
+    var expected = appletv.price().add(ipad.price()).add(macbook.price()).add(appletv.price());
+    var total = checkout.total();
+    assertThat("Deals not applied", total, equalTo(expected));
+  }
 }
